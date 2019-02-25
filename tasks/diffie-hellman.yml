@@ -1,0 +1,15 @@
+---
+# zerodowntime.sshd/tasks/diffie-hellman.yml
+
+- name: sshd | Check small Diffie-Hellman moduli
+  command: "awk '$5 < {{ sshd__moduli_min }}' {{ sshd__moduli_file }}"
+  register: _sshd_dh_moduli
+  check_mode: false
+  changed_when: _sshd_dh_moduli.stdout
+  diff: false
+  notify:
+    - 'Remove small sshd Diffie-Hellman moduli'
+    - 'restart sshd service'
+  tags:
+    - sshd
+    - sshd::configure

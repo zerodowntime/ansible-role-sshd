@@ -1,0 +1,16 @@
+---
+# zerodowntime.sshd/handlers/main.yml
+
+- name: restart sshd service
+  service:
+    name: "{{ sshd__service_name }}"
+    state: restarted
+
+
+- name: Remove small sshd Diffie-Hellman moduli
+  vars:
+    sshd___file_tmp: "{{ sshd__moduli_file }}.ansible.tmp"
+    sshd___mv: "mv {{ sshd___file_tmp }} {{ sshd__moduli_file }}"
+  become: true
+  shell: awk '$5 >= {{ sshd__moduli_min }}' {{ sshd__moduli_file }} > {{ sshd___file_tmp }}; {{ sshd___mv }}
+  diff: false

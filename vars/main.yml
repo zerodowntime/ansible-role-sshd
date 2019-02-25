@@ -1,0 +1,14 @@
+---
+# zerodowntime.sshd/vars/main.yml
+
+# sshd config name
+sshd__config: /etc/ssh/sshd_config
+
+# service name
+sshd__service_name: sshd
+
+# path to moduli
+sshd__moduli_file: /etc/ssh/moduli
+
+# moduli min
+sshd__moduli_min: 3071

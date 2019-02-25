@@ -1,0 +1,4 @@
+/**/*.pyc
+/molecule/*/tests/__pycache__
+/molecule/**/pytestdebug.log
+defaults/main.hardening.yml.zdt

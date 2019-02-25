@@ -1,0 +1,32 @@
+---
+# zerodowntime.sshd/meta/main.yml
+
+dependencies:
+  - role: zerodowntime.selinux_python
+    when:
+      - ansible_selinux is defined
+      - ansible_selinux.status == 'enabled'
+    tags: sshd
+
+  - role: zerodowntime.awk
+    tags: sshd
+
+
+galaxy_info:
+  role_name: sshd
+  min_ansible_version: 2.7
+  description: Ansible role to install and configure sshd
+  author: ZeroDowntime
+  company: ZeroDowntime Sp. z o.o.
+  license: Apache License 2.0
+  platforms:
+    - name: EL
+      versions:
+        - 7
+    - name: Ubuntu
+      versions:
+        - bionic
+        - xenial
+  galaxy_tags:
+    - system
+    - ssh

@@ -1,0 +1,12 @@
+---
+# zerodowntime.sshd/vars/ubuntu.yml
+
+sshd__packages:
+  - openssh-client
+  - openssh-server
+
+
+sshd__default_syslogfacility: AUTH
+
+
+sshd__subsystem_sftp: /usr/lib/openssh/sftp-server

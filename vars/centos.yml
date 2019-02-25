@@ -1,0 +1,12 @@
+---
+# zerodowntime.sshd/vars/centos.yml
+
+sshd__packages:
+  - openssh
+  - openssh-clients
+  - openssh-server
+
+
+sshd__default_syslogfacility: AUTHPRIV
+
+sshd__subsystem_sftp: /usr/libexec/openssh/sftp-server

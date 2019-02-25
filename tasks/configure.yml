@@ -1,0 +1,35 @@
+---
+# zerodowntime.sshd/tasks/configure.yml
+
+- name: sshd | allow sshd to listen on tcp port sshd__port
+  become: true
+  seport:
+    ports: "{{ sshd__port }}"
+    proto: tcp
+    setype: ssh_port_t
+    state: present
+  when:
+    - ansible_selinux is defined
+    - ansible_selinux.status == 'enabled'
+  tags:
+    - sshd
+    - sshd::configure
+
+
+- name: sshd | configure sshd
+  become: true
+  template:
+    src: templates/sshd_config.j2
+    dest: "{{ sshd__config }}"
+    owner: root
+    group: root
+    mode: 0600
+    seuser: 'system_u'
+    serole: 'object_r'
+    setype: 'etc_t'
+    validate: 'sshd -T -f %s'
+  notify:
+    - 'restart sshd service'
+  tags:
+    - sshd
+    - sshd::configure

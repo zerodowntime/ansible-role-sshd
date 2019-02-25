@@ -1,0 +1,48 @@
+---
+# zerodowntime.sshd/tasks/main.yml
+
+- name: sshd | include os specific variables for sshd
+  include_vars: "{{ item }}"
+  with_first_found:
+  - "{{ ansible_distribution | lower }}.yml"
+  tags:
+  - always
+  - sshd
+
+
+- name: sshd | install openssh
+  become: true
+  package:
+    name: "{{ item }}"
+    state: "{{ sshd__package_state }}"
+  loop: "{{ sshd__packages }}"
+  tags:
+    - sshd
+    - sshd::install
+
+
+- name: sshd | import configure sshd playbooks
+  import_tasks: configure.yml
+
+
+- name: sshd | import playbooks for check diffie-hellman moduli
+  import_tasks: diffie-hellman.yml
+
+
+- name: sshd | ensure that sshd service is enabled
+  become: true
+  systemd:
+    name: "{{ sshd__service_name }}"
+    enabled: true
+  tags:
+    - sshd
+    - sshd::enabled
+
+- name: sshd | ensure that sshd service is running
+  become: true
+  systemd:
+    name: "{{ sshd__service_name }}"
+    state: started
+  tags:
+    - sshd
+    - sshd::running
