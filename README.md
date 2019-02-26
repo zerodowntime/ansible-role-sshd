@@ -1,4 +1,4 @@
-# chrony
+# sshd
 
 Ansible role to install and configure sshd
 
@@ -7,7 +7,7 @@ Ansible role to install and configure sshd
 ```yaml
    ansible-galaxy install zerodowntime.awk
    ansible-galaxy install zerodowntime.selinux_python
-   ansible-galaxy install zerodowntime.chrony
+   ansible-galaxy install zerodowntime.sshd
 ```
 
 ## Requirements
